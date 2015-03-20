@@ -21,15 +21,17 @@ public class FlashCarddbAdapter {
     private static final String DB_NAME = "flashboard.db";
     private static final int DB_VERSION = 3;  // when you add or delete fields, you must update the version number!
 
-    private static final String SUBJECT_TABLE = "subjects";
-    public static final String SBJ_ID = "sbj_id";
-    public static final String SBJ_WHAT = "sbj_what";
-    public static final String SBJ_COLS = {SBJ_ID, SBJ_WHAT};
+
+    //Not necessary yet.
+    //private static final String SUBJECT_TABLE = "subjects";
+    //public static final String SBJ_ID = "sbj_id";
+    //public static final String SBJ_WHAT = "sbj_what";
+    //public static final String SBJ_COLS = {SBJ_ID, SBJ_WHAT};
 
 
     private static final String DECK_TABLE = "decks";
     public static final String DECK_ID = "deck_id";
-   // public static final String DECK_SUBJ = "deck_subj";
+    public static final String DECK_SUBJ = "deck_subj";
     public static final String DECK_Q = "deck_q";
     public static final String DECK_A = "deck_a";
     public static final String[] DECK_COLS = {DECK_ID, DECK_SUBJ, DECK_Q, DECK_A};
@@ -53,14 +55,40 @@ public class FlashCarddbAdapter {
 
     //database update methods
 
-    public long insertDeck(Deck d) {
+    public long insertCard(Card c) {
         //adds a physical deck to database
-        return 0;
+        ContentValues cvalues = new ContentValues();
+        cvalues.put(DECK_SUBJ, c.getSubject());
+        cvalues.put(DECK_Q, c.getQuestion());
+        cvalues.put(DECK_A, c.getAnswer());
+
+        return db.insert(DECK_TABLE, null, cvalues);
     }
-    public void insertCard(String subject, Card c) {
+
+    public boolean removeCard(long row) {
+        return db.delete(DECK_TABLE, DECK_ID+"="+row, null) > 0;
+    }
+
+    //Not required I don't think.
+    //public void clearDB() {
+    //    db.delete(DECK_TABLE, null, null);
+    //}
+
+    public Card getCard(long row) {
+        Cursor cursor = db.query(true, DECK_TABLE, DECK_COLS, DECK_ID+"="+row, null, null, null, null, null);
+        if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
+            throw new SQLException("No course items found for row: " + row);
+        }
+        int subjIndex = cursor.getColumnIndex(DECK_SUBJ);
+        Card result = new Card(cursor.getString(subjIndex), cursor.getString(2), cursor.getString(3));
+        return result;
+    }
+
+
+    //public void insertCard(String subject, Card c) {
         //goes through database and finds the appropriate deck using
         //the subject to add the card to the arraylist in the deck object
-    }
+    //}
 
     private static class FlashCarddbHelper extends SQLiteOpenHelper {
 
