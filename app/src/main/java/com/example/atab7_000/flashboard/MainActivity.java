@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,100 +17,34 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 
-public class MainActivity extends TabActivity {
+public class MainActivity extends FragmentActivity  {
 
     //Where i got this implementation
 //http://stackoverflow.com/questions/21474623/creating-an-android-app-using-tabhost-and-multiple-fragments
 
     private static final String TAG = "TabHostActivity";
 
-    private TabHost tabHost;
+    private FragmentTabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabHost = getTabHost();
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
-        TabHost.TabSpec firstSpec = tabHost.newTabSpec("first");
-        firstSpec.setIndicator("Review", null);
-        Intent firstIntent = new Intent(this, tab1.class);
-        firstSpec.setContent(firstIntent);
-
-        TabHost.TabSpec secondSpec = tabHost.newTabSpec("second");
-        secondSpec.setIndicator("Insert cards", null);
-        Intent secondIntent = new Intent(this, tab2.class);
-        secondSpec.setContent(secondIntent);
-
-        tabHost.addTab(firstSpec);
-        tabHost.addTab(secondSpec);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab1").setIndicator("Tab 1", null),
+                tab1.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab2").setIndicator("Tab 2", null),
+                tab2.class, null);
 
 
         //tabHost = (TabHost) findViewById(android.R.id.tabhost);
         //tabHost.setOnTabChangedListener(this);
         //tabHost.setCurrentTab(0);
         //setupTabs();
-    }
-
-    private void setupTabs()
-    {
-        tabHost.setup();
-        setupTab(new TextView(this), "tab1");
-        setupTab(new TextView(this), "tab2");
-
-    }
-
-    private void setupTab(final View view, final String tag)
-    {
-        View tabview = createTabView(tabHost.getContext(), tag);
-
-        TabHost.TabSpec setContent = tabHost.newTabSpec(tag)
-                .setIndicator(tabview)
-                .setContent(new TabHost.TabContentFactory()
-                {
-                    public View createTabContent(String tag)
-                    {
-                        return view;
-                    }
-                });
-        tabHost.addTab(setContent);
-    }
-
-    private static View createTabView(final Context context, final String tabId)
-    {
-        int resourceId;
-        if (tabId.equals("tab1"))
-        {
-            resourceId = R.layout.tab1;
-        }
-        else
-        {
-            resourceId = R.layout.tab2;
-        }
-
-        return LayoutInflater.from(context).inflate(resourceId, null);
-    }
-
-/**
-    public void onTabChanged(String tabId)
-    {
-        Log.d(TAG, "onTabChanged(): tabId=" + tabId);
-
-        if (tabId.equalsIgnoreCase("tab1"))
-        {
-            updateTab(android.R.id.tabcontent, new tab1(), tabId);
-        }
-        else
-        {
-            updateTab(android.R.id.tabcontent, new tab2(), tabId);
-        }
-    }
-**/
-    public void updateTab(int placeholder, Fragment fragment, String tabId)
-    {
-        //getSupportFragmentManager().beginTransaction()
-                //.replace(placeholder, fragment, tabId)
-                //.commit();
     }
 
     @Override

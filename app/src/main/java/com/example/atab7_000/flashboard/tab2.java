@@ -9,14 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class tab2 extends Activity {
+public class tab2 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "tab2";
     @Override
-    protected void onCreate(Bundle saveInstanceState){
+    public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.tab2);
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.tab2, container, false);
+
+        return v;
+    }
+
 /**
     @Override
     public void onActivityCreated(final Bundle savedInstanceState)
