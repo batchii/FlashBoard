@@ -2,6 +2,7 @@ package com.example.atab7_000.flashboard;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +16,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 
-public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener {
+public class MainActivity extends TabActivity {
 
     //Where i got this implementation
 //http://stackoverflow.com/questions/21474623/creating-an-android-app-using-tabhost-and-multiple-fragments
@@ -28,11 +29,26 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tabHost = getTabHost();
 
-        tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        tabHost.setOnTabChangedListener(this);
-        tabHost.setCurrentTab(0);
-        setupTabs();
+        TabHost.TabSpec firstSpec = tabHost.newTabSpec("first");
+        firstSpec.setIndicator("Review", null);
+        Intent firstIntent = new Intent(this, tab1.class);
+        firstSpec.setContent(firstIntent);
+
+        TabHost.TabSpec secondSpec = tabHost.newTabSpec("second");
+        secondSpec.setIndicator("Insert cards", null);
+        Intent secondIntent = new Intent(this, tab2.class);
+        secondSpec.setContent(secondIntent);
+
+        tabHost.addTab(firstSpec);
+        tabHost.addTab(secondSpec);
+
+
+        //tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        //tabHost.setOnTabChangedListener(this);
+        //tabHost.setCurrentTab(0);
+        //setupTabs();
     }
 
     private void setupTabs()
@@ -74,7 +90,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         return LayoutInflater.from(context).inflate(resourceId, null);
     }
 
-    @Override
+/**
     public void onTabChanged(String tabId)
     {
         Log.d(TAG, "onTabChanged(): tabId=" + tabId);
@@ -88,12 +104,12 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
             updateTab(android.R.id.tabcontent, new tab2(), tabId);
         }
     }
-
+**/
     public void updateTab(int placeholder, Fragment fragment, String tabId)
     {
-        getSupportFragmentManager().beginTransaction()
-                .replace(placeholder, fragment, tabId)
-                .commit();
+        //getSupportFragmentManager().beginTransaction()
+                //.replace(placeholder, fragment, tabId)
+                //.commit();
     }
 
     @Override
