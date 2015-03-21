@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="#eaecee">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eaecee"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <Spinner
+        android:id="@+id/choose_subject_pg1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/choose_subject_pg1"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp" />
 
     <CheckBox
+        android:id="@+id/randomize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/randomize"
-        android:id="@+id/checkBox"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:layout_below="@+id/choose_subject_pg1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:text="@string/randomize" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal|center_vertical" />
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/randomize"
+        android:layout_centerHorizontal="true"
+        android:onClick="startTest"/>
 
-</LinearLayout>
+</RelativeLayout>
