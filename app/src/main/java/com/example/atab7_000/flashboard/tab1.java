@@ -22,7 +22,7 @@ import static android.app.AlertDialog.Builder;
 public class tab1 extends Fragment { //extends Fragment originally
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "tab1";
-
+    
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -32,6 +32,11 @@ public class tab1 extends Fragment { //extends Fragment originally
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
+
+
+
+
+        //For the buttons
         Button button = (Button) v.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener()
         {

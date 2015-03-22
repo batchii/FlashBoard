@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 
 public class FlashCardTester extends ActionBarActivity {
@@ -12,6 +14,7 @@ public class FlashCardTester extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash_card_tester);
+        setTitle("Flashboard");
     }
 
 
@@ -30,10 +33,31 @@ public class FlashCardTester extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
+
+    //Flip card by tapping on screen
+    public void flip(View view){
+        Toast.makeText(this, "Flip", Toast.LENGTH_LONG).show();
+    }
+
+    //Go to previous card
+    public void previous(View view){
+        Toast.makeText(this, "previous", Toast.LENGTH_LONG).show();
+
+    }
+
+    //Got to next card
+    public void next(View view){
+        Toast.makeText(this, "next", Toast.LENGTH_LONG).show();
+
+    }
+
+    //Discard card
+    public void discard(View view){
+        Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
+
+    }
+
 }

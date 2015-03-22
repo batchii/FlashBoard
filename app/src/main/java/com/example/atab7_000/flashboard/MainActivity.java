@@ -32,14 +32,15 @@ public class MainActivity extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Flashboard");
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
         mTabHost.addTab(
-                mTabHost.newTabSpec("tab1").setIndicator("Tab 1", null),
+                mTabHost.newTabSpec("tab1").setIndicator("Review", null),
                 tab1.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("tab2").setIndicator("Tab 2", null),
+                mTabHost.newTabSpec("tab2").setIndicator("Insert Card", null),
                 tab2.class, null);
         sharedpreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
@@ -64,9 +65,7 @@ public class MainActivity extends ActionBarActivity  {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

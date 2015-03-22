@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.atab7_000.flashboard.FlashCardTester">
+    tools:context="com.example.atab7_000.flashboard.FlashCardTester"
+    android:onClick="flip">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -29,13 +30,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navigation_back"
-                android:id="@+id/backward"/>
+                android:id="@+id/previous"
+                android:onClick="previous"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navigation_forward"
-                android:id="@+id/forward"/>
+                android:id="@+id/next"
+                android:onClick="next"/>
         </LinearLayout>
 
         <TextView

@@ -33,6 +33,7 @@ public class tab2 extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab2, container, false);
 
+        //Adding buttons
         if (v != null) {
             ImageButton addButton = (ImageButton) v.findViewById(R.id.addset);
             Log.d(TAG, "View is not null");
@@ -52,13 +53,13 @@ public class tab2 extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    //On clicking a button do this
     @Override
     public void onClick(View v) {
         switch(v.getId())
         {
             case R.id.addset :
                 // addset button clicked
-                Toast.makeText(getActivity(), "FUCK", Toast.LENGTH_LONG).show();
                 PromptDialog dlg = new PromptDialog(getActivity(), R.string.create_subject, R.string.subject_name) {
                     @Override
                     public boolean onOkClicked(String input) {
@@ -76,21 +77,5 @@ public class tab2 extends Fragment implements View.OnClickListener {
         }
     }
 
-/**
-    @Override
-    public void onActivityCreated(final Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
 
-        Log.i(TAG, "onActivityCreated");
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState)
-    {
-        Log.i(TAG, "onCreateView");
-
-        return inflater.inflate(R.layout.tab1, container, false);
-    }
-*/
 }
