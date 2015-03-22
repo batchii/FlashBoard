@@ -42,7 +42,7 @@ public class tab1 extends Fragment { //extends Fragment originally
                 SharedPreferences.Editor editor = preferences.edit();
 
 
-
+                //This isn't working
                 String deck = String.valueOf(((Spinner)getView().findViewById(R.id.choose_subject_pg1)).getSelectedItem());
                 if(deck == null){
                     Builder alert = new Builder(getActivity());

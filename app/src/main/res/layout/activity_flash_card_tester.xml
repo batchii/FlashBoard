@@ -29,16 +29,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navigation_back"
-                android:background="@null"
-                android:id="@+id/button2" />
+                android:id="@+id/backward"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navigation_forward"
-                android:background="@null"
-                android:id="@+id/button3"
-                android:layout_wegith="1" />
+                android:id="@+id/forward"/>
         </LinearLayout>
 
         <TextView

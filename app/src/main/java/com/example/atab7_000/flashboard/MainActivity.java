@@ -18,7 +18,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 
-public class MainActivity extends FragmentActivity  {
+public class MainActivity extends ActionBarActivity  {
 
     //Where i got this implementation
 //http://stackoverflow.com/questions/21474623/creating-an-android-app-using-tabhost-and-multiple-fragments
