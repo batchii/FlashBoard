@@ -80,6 +80,13 @@ public class FlashCardTester extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_discard:
+                discard();
+                return true;
+
+        }
+
         //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
@@ -120,9 +127,37 @@ public class FlashCardTester extends ActionBarActivity {
     }
 
     //Discard card
-    public void discard(View view){
+    public void discard(){
+        //Store the question to use to remove the corresponding row in the db.
+        String q = questions.get(index);
+
+        //Set the appropriate text
+        if (questions.size() - 1 == 0) {
+            text.setText("Empty Deck.");
+            Toast.makeText(this, "No more cards for this subject.", Toast.LENGTH_LONG).show();
+            questions.remove(index);
+            answers.remove(index);
+            index = 0;
+        } else if ((index + 1) == questions.size()) {
+            text.setText(questions.get(0));
+            questions.remove(index);
+            answers.remove(index);
+            index = 0;
+        } else {
+            text.setText(questions.get(index + 1));
+            questions.remove(index);
+            answers.remove(index);
+        }
+
+        //Find the appropriate row to delete in the db.
+        long row = tab1.dbAdapt.getRowToDelete(q);
+
+        //Delete from db.
+        tab1.dbAdapt.removeCard(row);
+
         Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
 
     }
+
 
 }

@@ -133,6 +133,20 @@ public class FlashCarddbAdapter {
         return answers;
     }
 
+    public long getRowToDelete(String question) {
+        long row = 0;
+        Cursor cursor = getAllCards();
+        int rows = cursor.getCount();
+        Card c;
+        for (int i = 1; i <= rows; i++) {
+            c = this.getCard(i);
+            if (c.getQuestion().equals(question)) {
+                row = (long)i;
+            }
+        }
+        return row;
+    }
+
 
     //public void insertCard(String subject, Card c) {
         //goes through database and finds the appropriate deck using
