@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -102,6 +103,34 @@ public class FlashCarddbAdapter {
             }
         }
         return subjects;
+    }
+
+    public ArrayList<String> getAllQuestions(String subj) {
+        ArrayList<String> questions = new ArrayList<String>();
+        Cursor cursor = getAllCards();
+        int rows = cursor.getCount();
+        Card c;
+        for (int i = 1; i <= rows; i++) {
+            c = this.getCard(i);
+            if (c.getSubject().equals(subj)) {
+                questions.add(c.getQuestion());
+            }
+        }
+        return questions;
+    }
+
+    public ArrayList<String> getAllAnswers(String subj) {
+        ArrayList<String> answers = new ArrayList<String>();
+        Cursor cursor = getAllCards();
+        int rows = cursor.getCount();
+        Card c;
+        for (int i = 1; i <= rows; i++) {
+            c = this.getCard(i);
+            if (c.getSubject().equals(subj)) {
+                answers.add(c.getAnswer());
+            }
+        }
+        return answers;
     }
 
 

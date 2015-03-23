@@ -1,20 +1,68 @@
 package com.example.atab7_000.flashboard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class FlashCardTester extends ActionBarActivity {
+
+    SharedPreferences myPrefs;
+    Context context;
+    String subject;
+    //String question;
+    //String answer;
+    ArrayList<String> questions;
+    ArrayList<String> answers;
+    TextView text;
+    boolean random;
+    int index;
+    boolean qDisplayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash_card_tester);
         setTitle("Flashboard");
+
+        //Initialize Shared Preferences
+        context = getApplicationContext();
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        //Get the subject
+        subject = myPrefs.getString("subject", "Math");
+
+        //Determine whether to randomize or not
+        random = myPrefs.getBoolean("random", false);
+
+        //Get the questions
+        questions = tab1.dbAdapt.getAllQuestions(subject);
+
+        //Get the answers
+        answers = tab1.dbAdapt.getAllAnswers(subject);
+
+        //Initialize starting position of arraylist, refers to both q and a
+        index = 0;
+
+        //Gain access to TextView object
+        text = (TextView)findViewById(R.id.prompt);
+
+        //Sets the initial text to the first question of the deck
+        text.setText(questions.get(index));
+        qDisplayed = true;
+
+
+
+
     }
 
 
@@ -39,17 +87,34 @@ public class FlashCardTester extends ActionBarActivity {
 
     //Flip card by tapping on screen
     public void flip(View view){
+        if (qDisplayed) {
+            text.setText(answers.get(index));
+            qDisplayed = false;
+        } else {
+            text.setText(questions.get(index));
+            qDisplayed = true;
+        }
         Toast.makeText(this, "Flip", Toast.LENGTH_LONG).show();
     }
 
     //Go to previous card
     public void previous(View view){
+        index--;
+        if (index < 0) {
+            index = questions.size() - 1;
+        }
+        text.setText(questions.get(index));
         Toast.makeText(this, "previous", Toast.LENGTH_LONG).show();
 
     }
 
     //Got to next card
     public void next(View view){
+        index++;
+        if (index  == questions.size()) {
+            index = 0;
+        }
+        text.setText(questions.get(index));
         Toast.makeText(this, "next", Toast.LENGTH_LONG).show();
 
     }
