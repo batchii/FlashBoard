@@ -22,6 +22,8 @@ import static android.app.AlertDialog.Builder;
 public class tab1 extends Fragment { //extends Fragment originally
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "tab1";
+    protected static FlashCarddbAdapter dbAdapt;
+    Context context;
     
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -34,9 +36,17 @@ public class tab1 extends Fragment { //extends Fragment originally
         View v = inflater.inflate(R.layout.tab1, container, false);
 
 
+        //Set up DB
+        context = v.getContext();
+        dbAdapt = new FlashCarddbAdapter(context);
+        dbAdapt.open();
+
+        //DB Test
+        dbAdapt.insertCard(new Card("Math", "What is two?", "An integer."));
 
 
         //For the buttons
+
         Button button = (Button) v.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener()
         {
