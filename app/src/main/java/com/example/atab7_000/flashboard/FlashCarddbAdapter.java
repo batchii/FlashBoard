@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by Nikhil on 3/18/2015.
  */
@@ -74,14 +76,32 @@ public class FlashCarddbAdapter {
     //    db.delete(DECK_TABLE, null, null);
     //}
 
-    public Card getCard(long row) {
+    public Card getCard(long row) throws SQLException {
         Cursor cursor = db.query(true, DECK_TABLE, DECK_COLS, DECK_ID+"="+row, null, null, null, null, null);
         if ((cursor.getCount() == 0) || !cursor.moveToFirst()) {
-            throw new SQLException("No course items found for row: " + row);
+            throw new SQLException("No cards found for row: " + row);
         }
         int subjIndex = cursor.getColumnIndex(DECK_SUBJ);
         Card result = new Card(cursor.getString(subjIndex), cursor.getString(2), cursor.getString(3));
         return result;
+    }
+
+    public Cursor getAllCards(){
+        return db.query(DECK_TABLE, DECK_COLS, null, null, null, null, null);
+    }
+
+    public ArrayList<String> getAllSubjects() {
+        ArrayList<String> subjects = new ArrayList<String>();
+        String subj;
+        Cursor cursor = getAllCards();
+        int rows = cursor.getCount();
+        for (int i = 1; i <= rows; i++) {
+            subj = this.getCard(i).getSubject();
+            if (! subjects.contains(subj)) {
+                subjects.add(subj);
+            }
+        }
+        return subjects;
     }
 
 

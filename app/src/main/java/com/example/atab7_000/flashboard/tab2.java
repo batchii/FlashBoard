@@ -20,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class tab2 extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,8 +71,7 @@ public class tab2 extends Fragment implements View.OnClickListener {
         spinner.setAdapter(spinnerAdapter);
 
         //Testing whether database is working.
-        spinnerAdapter.add(tab1.dbAdapt.getCard(1).getSubject());
-        spinnerAdapter.notifyDataSetChanged();
+        populateSpinner();
 
         return v;
     }
@@ -157,6 +158,14 @@ public class tab2 extends Fragment implements View.OnClickListener {
                 break;
             // similarly for other buttons
         }
+    }
+
+    public void populateSpinner() {
+        ArrayList<String> subjects = tab1.dbAdapt.getAllSubjects();
+        for (int i = 0; i < subjects.size(); i++) {
+            spinnerAdapter.add(subjects.get(i));
+        }
+        spinnerAdapter.notifyDataSetChanged();
     }
 
 

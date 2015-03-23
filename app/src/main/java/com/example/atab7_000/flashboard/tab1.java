@@ -12,9 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 import static android.app.AlertDialog.Builder;
 
@@ -24,6 +27,8 @@ public class tab1 extends Fragment { //extends Fragment originally
     private static final String TAG = "tab1";
     protected static FlashCarddbAdapter dbAdapt;
     Context context;
+    Spinner spinner;
+    ArrayAdapter<String> spinnerAdapter;
     
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -44,6 +49,12 @@ public class tab1 extends Fragment { //extends Fragment originally
         //DB Test
         dbAdapt.insertCard(new Card("Math", "What is two?", "An integer."));
 
+        //Access spinner and set up adapter
+        spinner = (Spinner)v.findViewById(R.id.choose_subject_pg1);
+        spinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, android.R.id.text1);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        populateSpinner();
 
         //For the buttons
 
@@ -74,6 +85,14 @@ public class tab1 extends Fragment { //extends Fragment originally
                 }            }
         });
         return v;
+    }
+
+    public void populateSpinner() {
+        ArrayList<String> subjects = dbAdapt.getAllSubjects();
+        for (int i = 0; i < subjects.size(); i++) {
+            spinnerAdapter.add(subjects.get(i));
+        }
+        spinnerAdapter.notifyDataSetChanged();
     }
 
 /**
