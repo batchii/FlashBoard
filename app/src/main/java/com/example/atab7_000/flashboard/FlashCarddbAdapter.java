@@ -95,19 +95,44 @@ public class FlashCarddbAdapter {
         ArrayList<String> subjects = new ArrayList<String>();
         String subj;
         Cursor cursor = getAllCards();
+        if (cursor.moveToFirst())
+            do {
+                Card c = new Card(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                subj = c.getSubject();
+                if (! subjects.contains(subj)) {
+                    subjects.add(subj);
+                }
+            } while (cursor.moveToNext());
+        /*
         int rows = cursor.getCount();
         for (int i = 1; i <= rows; i++) {
             subj = this.getCard(i).getSubject();
             if (! subjects.contains(subj)) {
                 subjects.add(subj);
             }
-        }
+        }*/
+
+
         return subjects;
+    }
+
+    //TEMPORARY
+    public void deleteAllCards() {
+        db.delete(DECK_TABLE, null, null);
+        //  db.execSQL("DROP TABLE IF EXISTS " + COURSE_TABLE);
     }
 
     public ArrayList<String> getAllQuestions(String subj) {
         ArrayList<String> questions = new ArrayList<String>();
         Cursor cursor = getAllCards();
+        if (cursor.moveToFirst())
+            do {
+                Card c = new Card(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                if (c.getSubject().equals(subj)) {
+                    questions.add(c.getQuestion());
+                }
+            } while (cursor.moveToNext());
+        /*
         int rows = cursor.getCount();
         Card c;
         for (int i = 1; i <= rows; i++) {
@@ -115,13 +140,21 @@ public class FlashCarddbAdapter {
             if (c.getSubject().equals(subj)) {
                 questions.add(c.getQuestion());
             }
-        }
+        }*/
         return questions;
     }
 
     public ArrayList<String> getAllAnswers(String subj) {
         ArrayList<String> answers = new ArrayList<String>();
         Cursor cursor = getAllCards();
+        if (cursor.moveToFirst())
+            do {
+                Card c = new Card(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                if (c.getSubject().equals(subj)) {
+                    answers.add(c.getAnswer());
+                }
+            } while (cursor.moveToNext());
+        /*
         int rows = cursor.getCount();
         Card c;
         for (int i = 1; i <= rows; i++) {
@@ -129,13 +162,21 @@ public class FlashCarddbAdapter {
             if (c.getSubject().equals(subj)) {
                 answers.add(c.getAnswer());
             }
-        }
+        }*/
         return answers;
     }
 
     public long getRowToDelete(String question) {
         long row = 0;
         Cursor cursor = getAllCards();
+        if (cursor.moveToFirst())
+            do {
+                Card c = new Card(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                if (c.getQuestion().equals(question)) {
+                    row = (long)cursor.getPosition();
+                }
+            } while (cursor.moveToNext());
+        /*
         int rows = cursor.getCount();
         Card c;
         for (int i = 1; i <= rows; i++) {
@@ -143,7 +184,7 @@ public class FlashCarddbAdapter {
             if (c.getQuestion().equals(question)) {
                 row = (long)i;
             }
-        }
+        }*/
         return row;
     }
 

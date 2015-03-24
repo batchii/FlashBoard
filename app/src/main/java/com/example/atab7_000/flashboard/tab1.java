@@ -38,16 +38,19 @@ public class tab1 extends Fragment { //extends Fragment originally
         super.onCreate(saveInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
 
-
+        //tab1.dbAdapt.getCard();
         //Set up DB
         context = v.getContext();
         dbAdapt = new FlashCarddbAdapter(context);
         dbAdapt.open();
+
+        //dbAdapt.deleteAllCards();
 
         //Initialize Shared Preferences
         myPrefs = PreferenceManager.getDefaultSharedPreferences(context);

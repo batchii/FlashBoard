@@ -1,5 +1,6 @@
 package com.example.atab7_000.flashboard;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -51,7 +52,11 @@ public class FlashCardTester extends ActionBarActivity {
         answers = tab1.dbAdapt.getAllAnswers(subject);
 
         //Initialize starting position of arraylist, refers to both q and a
-        index = 0;
+        if (random) {
+            index = (int)(Math.random() * questions.size());
+        } else {
+            index = 0;
+        }
 
         //Gain access to TextView object
         text = (TextView)findViewById(R.id.prompt);
@@ -85,6 +90,7 @@ public class FlashCardTester extends ActionBarActivity {
                 discard();
                 return true;
 
+
         }
 
         //noinspection SimplifiableIfStatement
@@ -101,28 +107,44 @@ public class FlashCardTester extends ActionBarActivity {
             text.setText(questions.get(index));
             qDisplayed = true;
         }
-        Toast.makeText(this, "Flip", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Flip", Toast.LENGTH_LONG).show();
     }
 
     //Go to previous card
     public void previous(View view){
-        index--;
+        int prev = index;
+        if (random) {
+            while (index == prev) {
+                index = (int) (Math.random() * questions.size());
+            }
+        } else {
+            index--;
+        }
+        //index--;
         if (index < 0) {
             index = questions.size() - 1;
         }
         text.setText(questions.get(index));
-        Toast.makeText(this, "previous", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "previous", Toast.LENGTH_LONG).show();
 
     }
 
     //Got to next card
     public void next(View view){
-        index++;
+        int prev = index;
+        if (random) {
+            while (index == prev) {
+                index = (int) (Math.random() * questions.size());
+            }
+        } else {
+            index++;
+        }
+        //index++;
         if (index  == questions.size()) {
             index = 0;
         }
         text.setText(questions.get(index));
-        Toast.makeText(this, "next", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "next", Toast.LENGTH_LONG).show();
 
     }
 
@@ -155,7 +177,9 @@ public class FlashCardTester extends ActionBarActivity {
         //Delete from db.
         tab1.dbAdapt.removeCard(row);
 
-        Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
+
+
+        //Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
 
     }
 
